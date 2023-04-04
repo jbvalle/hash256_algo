@@ -1,0 +1,15 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-g",
+      "-o",
+      "main",
+      "main.c"
+    ],
+    "directory": "/home/strayker/Coding/127_hash",
+    "file": "/home/strayker/Coding/127_hash/main.c",
+    "output": "/home/strayker/Coding/127_hash/main"
+  }
+]
