@@ -3,16 +3,21 @@
 #include <openssl/sha.h>
 
 #define SHA256_DIGEST_LENGTH 32
-#define SEED_LENGTH 5
+#define SEED_LENGTH 3
 #define MAX_CHAPTERS 51
 #define MAX_PAGES 3
-#define MAX_WORD_RANGE 5
+#define MAX_WORD_RANGE 10
+#define MAX_LINE_RANGE 10
+#define SEED_STARTING_BLOCK 4
 int main() {
 
     char input_string[100];
     int chapter = 0;
     int page = 0;
-    int direction = 0;
+    int direction_page = 0;
+    int line = 0;
+    int direction_line = 0;
+
     int seed[SEED_LENGTH];
 
     for(int i = 0; i < SEED_LENGTH; i++) seed[i] = 0;
@@ -51,22 +56,32 @@ int main() {
             page = (tmp % MAX_PAGES) + 1;
         }
 
-        //determine direction
+        //determine direction_page
         if(i == 2){
-            direction = (tmp % 2);
+            direction_page = (tmp % 2);
+        }
+
+        //determine line
+        if(i == 3){
+            line = (tmp % MAX_LINE_RANGE) + 1;
+        }
+
+        //determine line direction
+        if(i == 4){
+            direction_line = (tmp % 2);
         }
 
         //determine seed
-        if(i > 2){
+        if(i > SEED_STARTING_BLOCK){
 
-            seed[i - 3] = (tmp % MAX_WORD_RANGE) + 1;
+            seed[i - (SEED_STARTING_BLOCK + 1)] = (tmp % MAX_WORD_RANGE) + 1;
         }
 
         printf(" -> tmp: %d", tmp);
         printf("\n");
     }
 
-    printf("Chapter : %d\nPage : %d\nDirection : %d", chapter, page, direction);
+    printf("Chapter : %d\nPage : %d\nPage Direction : %d\nLine : %d\nLine Direction : %d\n", chapter, page, direction_page, line, direction_line);
 
     for(int i = 0; i < SEED_LENGTH; i++){
         printf("\n%d : [%d]", i , seed[i]);
