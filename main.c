@@ -6,8 +6,8 @@
 #define SEED_LENGTH 3
 #define MAX_CHAPTERS 51
 #define MAX_PAGES 3
-#define MAX_WORD_RANGE 10
-#define MAX_LINE_RANGE 10
+#define MAX_WORD_RANGE 12
+#define MAX_LINE_RANGE 12
 #define SEED_STARTING_BLOCK 4
 int main() {
 
