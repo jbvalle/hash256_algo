@@ -3,15 +3,19 @@
 #include <openssl/sha.h>
 
 #define SHA256_DIGEST_LENGTH 32
-
+#define SEED_LENGTH 5
+#define MAX_CHAPTERS 51
+#define MAX_PAGES 3
+#define MAX_WORD_RANGE 5
 int main() {
 
     char input_string[100];
     int chapter = 0;
     int page = 0;
-    int seed[6];
+    int direction = 0;
+    int seed[SEED_LENGTH];
 
-    for(int i = 0; i < 6; i++) seed[i] = 0;
+    for(int i = 0; i < SEED_LENGTH; i++) seed[i] = 0;
 
     printf("Enter a string to encrypt and decrypt: ");
     fgets(input_string, 100, stdin);
@@ -39,27 +43,32 @@ int main() {
 
         //determine chapter
         if(i == 0){
-            chapter = (tmp % 51) + 1;
+            chapter = (tmp % MAX_CHAPTERS) + 1;
         }
 
         //determine page
         if(i == 1){
-            page = (tmp % 3) + 1;
+            page = (tmp % MAX_PAGES) + 1;
+        }
+
+        //determine direction
+        if(i == 2){
+            direction = (tmp % 2);
         }
 
         //determine seed
-        if(i > 1){
+        if(i > 2){
 
-            seed[i - 2] = (tmp % 10) + 1;
+            seed[i - 3] = (tmp % MAX_WORD_RANGE) + 1;
         }
 
         printf(" -> tmp: %d", tmp);
         printf("\n");
     }
 
-    printf("Chapter : %d\nPage : %d", chapter, page);;
+    printf("Chapter : %d\nPage : %d\nDirection : %d", chapter, page, direction);
 
-    for(int i = 0; i < 6; i++){
+    for(int i = 0; i < SEED_LENGTH; i++){
         printf("\n%d : [%d]", i , seed[i]);
     }
 
